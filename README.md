@@ -1,36 +1,53 @@
-# Exercise
+# TODO CLI Application
+This Go project is a command-line interface (CLI) tool designed to fetch and display the status of TODO items. It accepts TODO item IDs from various sources, such as an input file, and retrieves their status from a source API. The tool provides flexibility by allowing users to specify options for input, output, and the number of TODO items to fetch.
 
-The goal of the project is to build a command line tool.
+## Prerequisites
+* Go installed on your machine. [Install Go](https://golang.org/doc/install)
+* (Optional) Docker installed if you want to run the application in a Docker container. [Install Docker](https://docs.docker.com/get-docker/)
 
-Using Go, write a command line tool that consumes the first `20` `even` numbered TODO's in most performant way and output the `title` and whether it is `completed` or not.
+## Usage
+```bash
+./todo-cli -i <input-file> [-o <output-file>] [-n <num-todos>] [-h]
+```
+#### Options
+* `-i <input-file>`: Specifies the input file path containing TODO item IDs.
+* `-o <output-file>`: Specifies the output file path for TODOs. If not provided, the output will be displayed in the console.
+* `-n <num-todos>`: Specifies the number of even TODO IDs to fetch. The default value is 20 if not specified.
+* `-h`: Usage of the command
 
-- TODO at index 1 can be accessed at: <https://jsonplaceholder.typicode.com/todos/1>
+## Examples
+Fetch TODOs from the input file "input.txt" and display the output in the console:
+```bash
+./todo-cli -i input.txt
+```
 
-- TODO at index 2 can be accessed at: <https://jsonplaceholder.typicode.com/todos/2>
+Fetch the first 10 TODOs from the input file "input.txt" and save the output to the file "output.csv":
+```bash
+./todo-cli -i input.txt -o output.csv -n 10
+```
 
-Ensure you are submitting the code along with cli.
+## Getting Started
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/bvpatel/todo-cli.git
+    cd todo-cli
+    ```
+2. Build the application:
+    ```bash
+    make build
+    ```
+3. Run the application with the desired options:
+    ```bash
+    ./todo-cli -i input.txt -o output.csv -n 10
+    ```
 
-## Judging Criteria
+## Docker Support
+Build the Docker image:
+```bash
+docker build -t todo-cli .
+```
 
-- Engineering principles & standards
-- System extensibility & Scalability
-- Test coverage
-- Brevity and Simplicity
-
-## Bonus Points
-
-- Docker
-
-## FAQ
-
-### What is the time-limit on exercise ?
-
-There is none, ensure you submit your best attempt and as soon as you possibly can.
-
-### How to submit ?
-
-Submit a GitHub / Bitbucket repo for review. No ZIP files!
-
-### Do I need to write tests for connecting to API ?
-
-That can be ommitted.
+Run the Docker container:
+```bash
+docker run todo-cli
+```

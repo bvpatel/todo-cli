@@ -1,4 +1,3 @@
-# Use the official Golang image as the base image
 FROM golang:1.17-alpine
 
 # Set the working directory inside the container
@@ -18,4 +17,4 @@ COPY . .
 RUN go build -o todo-cli main.go
 
 # Command to run the application
-CMD ["./myapp"]
+CMD ["./todo-cli"]
