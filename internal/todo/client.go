@@ -10,7 +10,7 @@ import (
 const API_HOST = "https://jsonplaceholder.typicode.com"
 
 type TodoClient struct {
-	Client *http.Client
+	client HTTPClient
 }
 
 type Todo struct {
@@ -21,13 +21,12 @@ type Todo struct {
 }
 
 func NewTodoClient() *TodoClient {
-	client := &http.Client{}
-	return &TodoClient{Client: client}
+	return &TodoClient{client: &http.Client{}}
 }
 
 func (c *TodoClient) FetchTodo(id int) (Todo, error) {
 	url := fmt.Sprintf("%s/todos/%d", API_HOST, id)
-	resp, err := c.Client.Get(url)
+	resp, err := c.client.Get(url)
 	if err != nil {
 		return Todo{}, fmt.Errorf("error fetching TODO %d: %v", id, err)
 	}

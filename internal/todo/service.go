@@ -5,12 +5,16 @@ import (
 	"sync"
 )
 
+type ITodoClient interface {
+	FetchTodo(id int) (Todo, error)
+}
+
 type TodoService struct {
-	TodoClient *TodoClient
+	todoClient ITodoClient
 }
 
 func NewTodoService() *TodoService {
-	return &TodoService{TodoClient: NewTodoClient()}
+	return &TodoService{todoClient: NewTodoClient()}
 }
 
 func (service *TodoService) FetchAndCheckStatus(numbers []int) []Todo {
@@ -39,7 +43,7 @@ func (service *TodoService) FetchAndCheckStatus(numbers []int) []Todo {
 func (service *TodoService) fetchAndCheckStatus(num int, wg *sync.WaitGroup, resultChan chan<- Todo) {
 	defer wg.Done()
 
-	todo, err := service.TodoClient.FetchTodo(num)
+	todo, err := service.todoClient.FetchTodo(num)
 	if err != nil {
 		fmt.Printf("Error fetching TODO %d: %v\n", num, err)
 		return
