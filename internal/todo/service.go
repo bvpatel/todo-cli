@@ -16,7 +16,6 @@ func NewTodoService() *TodoService {
 func (service *TodoService) FetchAndCheckStatus(numbers []int) []Todo {
 	var wg sync.WaitGroup
 	resultChan := make(chan Todo, len(numbers))
-	defer close(resultChan)
 
 	for _, num := range numbers {
 		wg.Add(1)
@@ -30,7 +29,7 @@ func (service *TodoService) FetchAndCheckStatus(numbers []int) []Todo {
 
 	var todos []Todo
 	for todo := range resultChan {
-		fmt.Printf("Received TODO: %+v\n", todo)
+		// fmt.Printf("Received TODO: %+v\n", todo)
 		todos = append(todos, todo)
 	}
 
