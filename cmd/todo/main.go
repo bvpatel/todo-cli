@@ -11,12 +11,19 @@ import (
 )
 
 var fields = []string{"Title", "Completed"}
+var ReadFromFile = util.ReadFromFile
+var WriteToCSV = util.WriteToCSV
+var WriteToConsole = util.WriteToConsole
+
+type ITodoService interface {
+	FetchAndCheckStatus(numbers []int) []todo.Todo
+}
 
 type TodoApp struct {
 	inputFile  string
 	outputFile string
 	numTodos   int
-	service    *todo.TodoService
+	service    ITodoService
 }
 
 func NewTodoApp() *TodoApp {
@@ -34,7 +41,7 @@ func (app *TodoApp) ParseCommandLineArgs() {
 }
 
 func (app *TodoApp) ReadInputFromFile() []byte {
-	data, err := util.ReadFromFile(app.inputFile)
+	data, err := ReadFromFile(app.inputFile)
 	if err != nil {
 		fmt.Printf("Error reading input file: %v\n", err)
 		os.Exit(1)
@@ -65,13 +72,13 @@ func (app *TodoApp) FetchAndDisplayTodos(data []byte) {
 
 	if app.outputFile != "" {
 
-		if err := util.WriteToCSV(statuses, app.outputFile, fields); err != nil {
+		if err := WriteToCSV(statuses, app.outputFile, fields); err != nil {
 			fmt.Printf("Error writing TODOs to CSV file: %v\n", err)
 		} else {
 			fmt.Printf("TODOs written to CSV file: %s\n", app.outputFile)
 		}
 	} else {
-		if err := util.WriteToConsole(statuses, fields); err != nil {
+		if err := WriteToConsole(statuses, fields); err != nil {
 			fmt.Printf("Error writing TODOs to console: %v\n", err)
 		}
 	}
