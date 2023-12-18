@@ -49,5 +49,6 @@ docker build -t todo-cli .
 
 Run the Docker container:
 ```bash
-docker run todo-cli
+docker run -it todo-cli
+./todo-cli -i sample_input.txt
 ```
