@@ -1,4 +1,4 @@
-FROM golang:1.17-alpine
+FROM golang:1.21-alpine
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -17,4 +17,4 @@ COPY . .
 RUN go build -o todo-cli main.go
 
 # Command to run the application
-CMD ["./todo-cli"]
+CMD ["/bin/sh"]
